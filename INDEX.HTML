@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Precumpleaños</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff758c;
+            --accent-color: #ffd700;
+            --cake-frosting: #ffdde1;
+            --cake-plate: #e0e0e0;
+            --cake-flame: #ffa500;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #0f0f0f;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        .background-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(-45deg, #2c3e50, #000000, #4a148c, #880e4f);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 3rem 2rem 1.5rem 2rem;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            max-width: 420px;
+            width: 85%;
+            z-index: 10;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.8rem;
+            color: white;
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(255, 117, 140, 0.6);
+            line-height: 1;
+        }
+
+        .highlight {
+            font-weight: 700;
+            color: var(--accent-color);
+            display: block;
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        /* --- PASTEL --- */
+        .cake-container {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
+        }
+
+        .plate {
+            width: 160px; height: 12px;
+            background: var(--cake-plate);
+            border-radius: 50%;
+            position: absolute; bottom: 5px; left: -10px;
+        }
+
+        .layer {
+            position: absolute;
+            background: var(--cake-frosting);
+            border-radius: 10px 10px 4px 4px;
+            left: 50%; transform: translateX(-50%);
+        }
+
+        .layer-bottom { width: 120px; height: 60px; bottom: 15px; }
+        .layer-top { width: 85px; height: 50px; bottom: 75px; }
+
+        .icing-drip {
+            width: 100%; height: 15px;
+            background: #ffffff;
+            border-radius: 10px 10px 15px 15px;
+            position: absolute; top: 0; z-index: 2;
+        }
+
+        .candle {
+            width: 10px; height: 35px;
+            background: repeating-linear-gradient(45deg, #6dd5ed, #6dd5ed 5px, #ffffff 5px, #ffffff 10px);
+            position: absolute; bottom: 125px; left: 50%; transform: translateX(-50%);
+            border-radius: 3px;
+        }
+
+        .flame {
+            width: 15px; height: 25px;
+            background: var(--cake-flame);
+            border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+            position: absolute; bottom: 160px; left: 50%; transform: translateX(-50%);
+            box-shadow: 0 0 20px #ffa500;
+            animation: flicker 0.15s infinite alternate;
+        }
+
+        @keyframes flicker {
+            from { transform: translateX(-50%) scale(1); }
+            to { transform: translateX(-52%) scale(1.1) rotate(2deg); }
+        }
+
+        /* --- FOOTER / DERECHOS RESERVADOS --- */
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* --- CONFETI --- */
+        .confetti-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 5;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px; height: 10px;
+            top: -20px;
+            animation: fall var(--d) linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-canvas"></div>
+    <div class="confetti-container" id="confetti-wrapper"></div>
+
+    <div class="card">
+        <div class="cake-container">
+            <div class="plate"></div>
+            <div class="layer layer-bottom"><div class="icing-drip"></div></div>
+            <div class="layer layer-top"><div class="icing-drip"></div></div>
+            <div class="candle"></div>
+            <div class="flame"></div>
+        </div>
+
+        <h1>¡Feliz <br> Precumpleaños!</h1>
+        <span class="highlight">✨ MUCHACHAS ✨</span>
+<h5>
+        <div class="footer">
+            Todos los derechos reservados a <br>
+            
+            <strong>Alexander Zamorano 2026</strong> </h6>
+        </div>
+    </div>
+
+    <script>
+        function createConfetti() {
+            const container = document.getElementById('confetti-wrapper');
+            const colors = ['#ff758c', '#ffd700', '#00f2fe', '#ffffff', '#ff0080'];
+            
+            for (let i = 0; i < 8; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                const duration = Math.random() * 2 + 3;
+                confetti.style.setProperty('--d', `${duration}s`);
+                if (Math.random() > 0.5) confetti.style.borderRadius = '50%';
+                container.appendChild(confetti);
+                setTimeout(() => confetti.remove(), duration * 1000);
+            }
+        }
+        setInterval(createConfetti, 400);
+    </script>
+</body>
+</html>
